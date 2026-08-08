@@ -1,1 +1,6 @@
 *.log
+# 模型与 llama.cpp 二进制体积大（GB 级），不入库
+/models/*
+/vendor/*
+!/models/README.md
+!/vendor/README.md

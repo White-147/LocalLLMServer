@@ -32,39 +32,33 @@
 
 ## 快速开始
 
-### 1. 准备 llama.cpp
-
-从 llama.cpp [Releases](https://github.com/ggerganov/llama.cpp/releases) 下载 Windows + CUDA 版本，解压后目录中包含 `llama-server.exe` 与 CUDA 依赖 DLL。
-
-### 2. 下载模型
-
-将 GGUF 文件下载到本地，例如 `D:\models\DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf`。
-
-### 3. 启动服务
+### 1. 启动服务
 
 ```bat
-llama-server -m D:\models\DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf ^
-    -ngl 5 ^
-    -c 16384 ^
-    --host 127.0.0.1 ^
-    --port 8080 ^
-    -lv 1 ^
-    --flash-attn on ^
-    -b 1024 ^
-    --threads 12
+scripts\start-server.bat
 ```
 
-或直接使用本仓库脚本（自动探测 `LLAMA_SERVER` 环境变量或 PATH）：
+默认读取 `models\deepseek-coder-v2-lite-instruct-q4_k_m.gguf` 模型、`vendor\llama\llama-server.exe` 程序，监听 `127.0.0.1:8080`；也可显式覆盖：
 
 ```bat
-scripts\start-server.bat D:\models\DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf 8080
+scripts\start-server.bat [模型路径] [端口]
 ```
 
-### 4. 验证服务
+### 2. 停止服务
+
+```bat
+scripts\stop-server.bat        :: 默认端口 8080，可传参: stop-server.bat 9090
+```
+
+按端口结束监听进程。
+
+### 3. 验证服务
 
 ```bat
 scripts\test-api.bat 8080
 ```
+
+一次跑通 `GET /v1/models` 与 `POST /v1/chat/completions`。
 
 ## OpenAI 兼容 API 用法
 
@@ -120,10 +114,24 @@ curl http://127.0.0.1:8080/v1/chat/completions \
 ## 目录结构
 
 ```
+├── models/
+│   ├── deepseek-coder-v2-lite-instruct-q4_k_m.gguf   # GGUF 模型（约 9.7 GB，不入库）
+│   └── README.md                                     # 模型说明与下载方式
+├── vendor/
+│   ├── llama/                                        # llama.cpp 二进制（约 740 MB，不入库）
+│   └── README.md                                     # 运行环境说明
 ├── scripts/
-│   ├── start-server.bat   # 启动脚本（参数化模型路径/端口）
+│   ├── start-server.bat   # 启动（默认项目内模型/程序，可参数覆盖）
+│   ├── stop-server.bat    # 停止（按端口杀监听进程）
 │   └── test-api.bat       # 连通性自检（models + chat 一次跑通）
 └── README.md
 ```
 
-> 说明：GGUF 模型文件体积大（10 GB 级），不纳入版本库；本仓库只包含可复现的启动与验证脚本。
+## 换机器复现
+
+模型（约 9.7 GB）与 llama.cpp 二进制（约 740 MB）体积过大，**不纳入版本库**（见 `.gitignore`），clone 后需：
+
+1. 下载 GGUF 模型放入 `models\`（见 `models\README.md`）
+2. 下载 llama.cpp Windows + CUDA 版放入 `vendor\llama\`（见 `vendor\README.md`）
+
+完成后 `scripts\start-server.bat` 即可直接启动，行为与本机一致。
