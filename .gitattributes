@@ -1,0 +1,2 @@
+# bat 脚本强制 CRLF 换行（Windows cmd 依赖 CRLF）
+*.bat text eol=crlf

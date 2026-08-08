@@ -35,30 +35,27 @@
 ### 1. 启动服务
 
 ```bat
-scripts\start-server.bat
+start-llm.bat            :: 项目根目录，默认端口 8080
+start-llm.bat 9090       :: 指定端口
 ```
 
-默认读取 `models\deepseek-coder-v2-lite-instruct-q4_k_m.gguf` 模型、`vendor\llama\llama-server.exe` 程序，监听 `127.0.0.1:8080`；也可显式覆盖：
-
-```bat
-scripts\start-server.bat [模型路径] [端口]
-```
+脚本基于 `%~dp0` 相对路径，自动读取 `models\` 下的模型与 `vendor\llama\llama-server.exe`（本机已内置）。
 
 ### 2. 停止服务
 
-```bat
-scripts\stop-server.bat        :: 默认端口 8080，可传参: stop-server.bat 9090
-```
-
-按端口结束监听进程。
+直接在运行窗口按 `Ctrl+C`（llama-server 前台运行）。
 
 ### 3. 验证服务
 
-```bat
-scripts\test-api.bat 8080
-```
+```bash
+# 列出可用模型
+curl http://127.0.0.1:8080/v1/models
 
-一次跑通 `GET /v1/models` 与 `POST /v1/chat/completions`。
+# 对话补全（Windows 命令行内联中文 JSON 需 UTF-8 编码，建议先用英文测试）
+curl http://127.0.0.1:8080/v1/chat/completions ^
+  -H "Content-Type: application/json" ^
+  -d "{\"model\":\"deepseek-coder-v2-lite-instruct-q4_k_m.gguf\",\"messages\":[{\"role\":\"user\",\"content\":\"Say hello\"}],\"max_tokens\":100}"
+```
 
 ## OpenAI 兼容 API 用法
 
@@ -70,7 +67,7 @@ curl http://127.0.0.1:8080/v1/models
 curl http://127.0.0.1:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M.gguf",
+    "model": "deepseek-coder-v2-lite-instruct-q4_k_m.gguf",
     "messages": [{"role": "user", "content": "用 Java 写一个二分查找"}],
     "max_tokens": 200,
     "temperature": 0.3
@@ -120,10 +117,7 @@ curl http://127.0.0.1:8080/v1/chat/completions \
 ├── vendor/
 │   ├── llama/                                        # llama.cpp 二进制（约 740 MB，不入库）
 │   └── README.md                                     # 运行环境说明
-├── scripts/
-│   ├── start-server.bat   # 启动（默认项目内模型/程序，可参数覆盖）
-│   ├── stop-server.bat    # 停止（按端口杀监听进程）
-│   └── test-api.bat       # 连通性自检（models + chat 一次跑通）
+├── start-llm.bat   # 启动脚本（%~dp0 相对路径，默认 8080；停止：Ctrl+C）
 └── README.md
 ```
 
@@ -134,4 +128,4 @@ curl http://127.0.0.1:8080/v1/chat/completions \
 1. 下载 GGUF 模型放入 `models\`（见 `models\README.md`）
 2. 下载 llama.cpp Windows + CUDA 版放入 `vendor\llama\`（见 `vendor\README.md`）
 
-完成后 `scripts\start-server.bat` 即可直接启动，行为与本机一致。
+完成后 `start-llm.bat` 即可直接启动，行为与本机一致。
