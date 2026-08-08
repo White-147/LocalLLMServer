@@ -10,8 +10,8 @@
 
 ## 来源
 
-llama.cpp Releases（Windows + CUDA 版）：
-https://github.com/ggerganov/llama.cpp/releases
+llama.cpp Releases（Windows + CUDA 版，版本 **b8581**）：
+https://github.com/ggml-org/llama.cpp/releases?q=b8581&expanded=true
 
 ## 换机器复现
 

@@ -16,7 +16,7 @@ if "%PORT%"=="" set "PORT=8080"
 
 if not exist "%BIN%" (
     echo [错误] 未找到 %BIN%
-    echo        请从 https://github.com/ggerganov/llama.cpp/releases 下载
+    echo        请从 https://github.com/ggml-org/llama.cpp/releases?q=b8581 下载
     echo        Windows + CUDA 版，解压后放入 vendor\llama\ 目录（见 vendor\README.md）
     exit /b 1
 )

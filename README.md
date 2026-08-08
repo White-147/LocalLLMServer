@@ -28,7 +28,8 @@
 
 - **DeepSeek-Coder-V2-Lite-Instruct**（16B MoE 架构的量化轻量版）
 - 量化格式：GGUF **Q4_K_M**，文件约 **10.3 GB**
-- 下载来源：HuggingFace（`deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct-GGUF`）
+- 下载来源：HuggingFace（[legionarius/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF](https://huggingface.co/legionarius/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF/blob/main/deepseek-coder-v2-lite-instruct-q4_k_m.gguf)）
+- **llama.cpp 版本**：b8581（Windows + CUDA 构建，[下载](https://github.com/ggml-org/llama.cpp/releases?q=b8581&expanded=true)）
 
 ## 快速开始
 

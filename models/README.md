@@ -9,13 +9,13 @@
 | 文件名 | `deepseek-coder-v2-lite-instruct-q4_k_m.gguf` |
 | 大小 | 约 9.7 GB |
 | 模型 | DeepSeek-Coder-V2-Lite-Instruct（16B MoE，Q4_K_M 量化） |
-| 来源 | HuggingFace `deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct-GGUF` |
+| 来源 | HuggingFace：[legionarius/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF](https://huggingface.co/legionarius/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF/blob/main/deepseek-coder-v2-lite-instruct-q4_k_m.gguf) |
 
 ## 下载
 
 ```bash
 # 方式一：huggingface-cli
-huggingface-cli download deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct-GGUF \
+huggingface-cli download legionarius/DeepSeek-Coder-V2-Lite-Instruct-Q4_K_M-GGUF \
   deepseek-coder-v2-lite-instruct-q4_k_m.gguf --local-dir .
 
 # 方式二：浏览器直接下载 GGUF 文件后放入本目录
